@@ -24,35 +24,32 @@ class Board
   HEREDOC
   end
 
-  def check_for_empty_cells(position, tag)
+  def check_for_empty_cells?(position, tag)
      cell = first_cell_to_check_for_empty_space(position)
-     if cell == false
-      return false
-     else
+     return false if cell == -1
       5.downto(0) do |i|
         if @@board_array[i][cell].empty?
           @@board_array[i][cell] = tag
           return true
         end
       end
-      return false
-    end
+      false
   end
 
-  def check_for_full_board
+  def check_for_full_board?
     @@board_array.flatten.any?('') ? false : true
   end
 
-  def check_for_all_wins
-    return true if check_for_wins_vertically 
-    return true if check_for_wins_horizontally
-    return true if check_for_wins_in_the_left_diagonals
-    return true if check_for_wins_in_the_right_diagonals
+  def check_for_all_wins?
+    return true if check_for_wins_vertically?
+    return true if check_for_wins_horizontally?
+    return true if check_for_wins_in_the_left_diagonals?
+    return true if check_for_wins_in_the_right_diagonals?
     false
   end
 
   private
-  def check_for_wins_vertically
+  def check_for_wins_vertically?
     0.upto(5) do |i|
       0.upto(3) do |j|
         if (@@board_array[i][j] == @@board_array[i][j+1]) && (@@board_array[i][j] == @@board_array[i][j+2]) && (@@board_array[i][j] == @@board_array[i][j+3]) && (@@board_array[i][j] != '')
@@ -67,7 +64,7 @@ class Board
     false
   end
 
-  def check_for_wins_horizontally
+  def check_for_wins_horizontally?
     0.upto(6) do |j|
       0.upto(2) do |i|
         if (@@board_array[i][j] == @@board_array[i+1][j]) && (@@board_array[i][j] == @@board_array[i+2][j]) && (@@board_array[i][j] == @@board_array[i+3][j]) && (@@board_array[i][j] != '')
@@ -82,7 +79,7 @@ class Board
     false
   end
 
-  def check_for_wins_in_the_left_diagonals
+  def check_for_wins_in_the_left_diagonals?
     6.downto(3) do |j|
       0.upto(2) do |i|
         if (@@board_array[i][j] == @@board_array[i+1][j-1]) && (@@board_array[i][j] == @@board_array[i+2][j-2]) && (@@board_array[i][j] == @@board_array[i+3][j-3]) && (@@board_array[i][j] != '')
@@ -97,7 +94,7 @@ class Board
     false
   end
 
-  def check_for_wins_in_the_right_diagonals
+  def check_for_wins_in_the_right_diagonals?
     0.upto(3) do |j|
       0.upto(2) do |i|
         if (@@board_array[i][j] == @@board_array[i+1][j+1]) && (@@board_array[i][j] == @@board_array[i+2][j+2]) && (@@board_array[i][j] == @@board_array[i+3][j+3]) && (@@board_array[i][j] != '')
@@ -129,7 +126,7 @@ class Board
     when 'g'
       cell = 6
     else
-      return false
+      return -1
     end
     cell
   end

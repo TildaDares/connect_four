@@ -1,88 +1,113 @@
 require './lib/board'
+require 'colorize'
 describe Board do
-  describe "#check_for_all_wins" do
-    board = Board.new
-    it "returns true when there's a vertical win" do
-      @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;32;49m◈\e[0m", "", ""]]
-      expect(board.check_for_all_wins).to eql(true)
+  describe "#check_for_all_wins?" do
+    subject { described_class.new }
+    context "when there's a vertical win" do
+      it "returns true" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "◉".blue, "◉".blue, "◉".blue, "◉".blue, "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to be_check_for_all_wins
+      end
     end
 
-    it "returns true when there's a horizontal win" do
-      @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "\e[0;31;49m◉\e[0m", "", "", "", "", ""], 
-      ["", "\e[0;31;49m◉\e[0m", "", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "", "", "", ""]]
-      expect(board.check_for_all_wins).to eql(true)
+    context "when there's a horizontal win" do
+      it "returns true" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["◉".red, "", "", "", "", "", ""], 
+        ["◉".red, "", "", "", "", "", ""], 
+        ["◉".red, "", "", "", "", "", ""], 
+        ["◉".red, "", "", "", "", "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to be_check_for_all_wins
+     end
     end
 
-    it "returns true when there's a win in the left diagonal of the board" do
-      @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "\e[0;32;49m◈\e[0m", "", "", ""], 
-      ["", "", "\e[0;32;49m◈\e[0m", "\e[0;34;49m◉\e[0m", "", "", ""], 
-      ["", "\e[0;32;49m◈\e[0m", "\e[0;34;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "", "", ""], 
-      ["\e[0;32;49m◈\e[0m", "\e[0;34;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;34;49m◉\e[0m", "", "\e[0;34;49m◉\e[0m", ""]]
-      expect(board.check_for_all_wins).to eql(true)
+    context "when there's a win in the left diagonal of the board" do
+      it "returns true" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "◉".red, "", "", ""], 
+        ["", "", "◉".red, "", "", "", ""], 
+        ["", "◉".red, "", "", "", "", ""], 
+        ["◉".red, "", "", "", "", "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to be_check_for_all_wins
+      end
     end
 
-    it "returns true when there's a win in the right diagonal of the board" do
-      @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["\e[0;32;49m◈\e[0m", "", "", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "", "", "", "", ""], 
-      ["\e[0;34;49m◉\e[0m", "\e[0;34;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "", "\e[0;31;49m◉\e[0m"]]
-      expect(board.check_for_all_wins).to eql(true)
+    context "when there's a when there's a win in the right diagonal of the board" do
+      it "returns true" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["◉".blue, "", "", "", "", "", ""], 
+        ["", "◉".blue, "", "", "", "", ""], 
+        ["", "", "◉".blue, "", "", "", ""], 
+        ["", "", "", "◉".blue, "", "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to be_check_for_all_wins
+      end
     end
 
-    it "returns false when there are no wins at all" do
-      @@board_array = [["\e[0;34;49m◉\e[0m", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "\e[0;34;49m◉\e[0m", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""]]
-      expect(board.check_for_all_wins).to eql(false)
+    context 'when there are no wins at all' do
+      it "returns false" do
+        board_array = [["◉".blue, "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "◉".blue, "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to_not be_check_for_all_wins
+      end
     end
   end
 
-  describe "#check_for_full_board" do
-    board = Board.new
-    it "returns true when the board's full" do
-      @@board_array = [["\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m"], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m"], 
-      ["\e[0;32;49m◈\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m"], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m"], 
-      ["\e[0;34;49m◉\e[0m", "\e[0;34;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m"], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m", "\e[0;31;49m◉\e[0m"]]
-      expect(board.check_for_full_board).to eql(true)
+  describe "#check_for_full_board?" do
+    subject { described_class.new }
+    context "when the board's full" do
+      it "returns true" do
+        board_array = [["◉".blue, "◉".red, "◉".blue, "◉".red, "◉".red, "◉".blue, "◉".blue], 
+        ["◉".blue, "◉".red, "◉".red, "◉".blue, "◉".blue, "◉".blue, "◉".blue], 
+        ["◉".blue, "◉".red, "◉".blue, "◉".red, "◉".red, "◉".red, "◉".red], 
+        ["◉".blue, "◉".red, "◉".red, "◉".red, "◉".blue, "◉".red, "◉".blue], 
+        ["◉".red, "◉".blue, "◉".blue, "◉".red, "◉".blue, "◉".blue, "◉".red], 
+        ["◉".red, "◉".red, "◉".blue, "◉".blue, "◉".blue, "◉".red, "◉".red]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to be_check_for_full_board
+      end
     end
 
-    it "returns false when board is not full" do
-      @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["\e[0;31;49m◉\e[0m", "\e[0;32;49m◈\e[0m", "", "", "", "", ""], 
-      ["\e[0;34;49m◉\e[0m", "", "\e[0;32;49m◈\e[0m", "", "", "", ""], 
-      ["", "\e[0;31;49m◉\e[0m", "", "\e[0;32;49m◈\e[0m", "", "", "\e[0;31;49m◉\e[0m"]]
-      expect(board.check_for_full_board).to eql(false)
+    context 'when board is not full' do
+      it "returns false" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["◉".red, "◉".blue, "", "", "", "", ""], 
+        ["◉".red, "", "◉".red, "", "", "", ""], 
+        ["", "◉".blue, "", "◉".red, "", "", "◉".blue]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to_not be_check_for_full_board
+      end
     end
 
-    it "returns false when board is empty" do
-        @@board_array = [["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""], 
-      ["", "", "", "", "", "", ""]]
-      expect(board.check_for_full_board).to eql(false)
+    context 'when board is empty' do
+      it "returns false" do
+        board_array = [["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""], 
+        ["", "", "", "", "", "", ""]]
+        Board.class_variable_set(:@@board_array, board_array)
+        expect(subject).to_not be_check_for_full_board
+      end
     end
   end
 end

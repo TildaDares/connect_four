@@ -23,8 +23,8 @@ class Game
 
   def play
     loop do
-      break if @player1.player_turn
-      break if @player2.player_turn
+      break if @player1.player_turn?
+      break if @player2.player_turn?
     end
   end
 end
