@@ -1,14 +1,14 @@
 require 'colorize'
 class Board
   def initialize
-    @@board_array = Array.new(6){ Array.new(7) {''}}
+    @@board_array = Array.new(6) { Array.new(7) { '' } }
   end
 
   def build_board
     a = @@board_array
     puts <<-HEREDOC
       |----+----+----+----+----+----+----|
-      | #{a[0][0]}   |  #{a[0][1]}  |  #{a[0][2]}  |  #{a[0][3]}  |  #{a[0][4]}  |  #{a[0][5]}  |  #{a[0][6]}  |                    
+      |  #{a[0][0]}  |  #{a[0][1]}  |  #{a[0][2]}  |  #{a[0][3]}  |  #{a[0][4]}  |  #{a[0][5]}  |  #{a[0][6]}  |                    
       |----+----+----+----+----+----+----|
       |  #{a[1][0]}  |  #{a[1][1]}  |  #{a[1][2]}  |  #{a[1][3]}  |  #{a[1][4]}  |  #{a[1][5]}  |  #{a[1][6]}  | 
       |----+----+----+----+----+----+----|
@@ -16,24 +16,25 @@ class Board
       |----+----+----+----+----+----+----|
       |  #{a[3][0]}  |  #{a[3][1]}  |  #{a[3][2]}  |  #{a[3][3]}  |  #{a[3][4]}  |  #{a[3][5]}  |  #{a[3][6]}  |
       |----+----+----+----+----+----+----|
-      |  #{a[4][0]}  |  #{a[4][1]}  |  #{a[4][2]}  | #{a[4][3]}   |  #{a[4][4]}  |  #{a[4][5]}  |  #{a[4][6]}  |                    
+      |  #{a[4][0]}  |  #{a[4][1]}  |  #{a[4][2]}  |  #{a[4][3]}  |  #{a[4][4]}  |  #{a[4][5]}  |  #{a[4][6]}  |                    
       |----+----+----+----+----+----+----|
       |  #{a[5][0]}  |  #{a[5][1]}  |  #{a[5][2]}  |  #{a[5][3]}  |  #{a[5][4]}  |  #{a[5][5]}  |  #{a[5][6]}  | 
       |----+----+----+----+----+----+----|
          a    b    c    d    e    f    g
-  HEREDOC
+           HEREDOC
   end
 
   def check_for_empty_cells?(position, tag)
-     cell = first_cell_to_check_for_empty_space(position)
-     return false if cell == -1
-      5.downto(0) do |i|
-        if @@board_array[i][cell].empty?
-          @@board_array[i][cell] = tag
-          return true
-        end
+    cell = first_cell_to_check_for_empty_space(position)
+    return false if cell == -1
+
+    5.downto(0) do |i|
+      if @@board_array[i][cell].empty?
+        @@board_array[i][cell] = tag
+        return true
       end
-      false
+    end
+    false
   end
 
   def check_for_full_board?
@@ -45,10 +46,12 @@ class Board
     return true if check_for_wins_horizontally?
     return true if check_for_wins_in_the_left_diagonals?
     return true if check_for_wins_in_the_right_diagonals?
+
     false
   end
 
   private
+
   def check_for_wins_vertically?
     0.upto(5) do |i|
       0.upto(3) do |j|

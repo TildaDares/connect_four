@@ -24,7 +24,7 @@ class Player
     end
     @@board.build_board
     if @@board.check_for_full_board?
-      puts "Board is full!".yellow
+      puts 'Board is full!'.yellow
       return true
     end
     false
