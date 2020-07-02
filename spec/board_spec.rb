@@ -1,7 +1,7 @@
 require './lib/board'
 require 'colorize'
 describe Board do
-  board = Board.new
+  board = described_class.new
   describe '#check_for_all_wins?' do
     context "when there's a vertical win" do
       it 'returns true' do
@@ -13,7 +13,7 @@ describe Board do
         ['', '', '', '', '', '', ''],
         ['', '◉'.blue, '◉'.blue, '◉'.blue, '◉'.blue, '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to be_check_for_all_wins
       end
     end
@@ -28,7 +28,7 @@ describe Board do
         ['◉'.red, '', '', '', '', '', ''],
         ['◉'.red, '', '', '', '', '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to be_check_for_all_wins
       end
     end
@@ -43,7 +43,7 @@ describe Board do
         ['', '◉'.red, '', '', '', '', ''],
         ['◉'.red, '', '', '', '', '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to be_check_for_all_wins
       end
     end
@@ -58,7 +58,7 @@ describe Board do
         ['', '', '◉'.blue, '', '', '', ''],
         ['', '', '', '◉'.blue, '', '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to be_check_for_all_wins
       end
     end
@@ -73,7 +73,7 @@ describe Board do
         ['', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to_not be_check_for_all_wins
       end
     end
@@ -90,7 +90,7 @@ describe Board do
         ['◉'.red, '◉'.blue, '◉'.blue, '◉'.red, '◉'.blue, '◉'.blue, '◉'.red],
         ['◉'.red, '◉'.red, '◉'.blue, '◉'.blue, '◉'.blue, '◉'.red, '◉'.red]
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to be_check_for_full_board
       end
     end
@@ -105,7 +105,7 @@ describe Board do
         ['◉'.red, '', '◉'.red, '', '', '', ''],
         ['', '◉'.blue, '', '◉'.red, '', '', '◉'.blue]
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to_not be_check_for_full_board
       end
     end
@@ -120,7 +120,7 @@ describe Board do
         ['', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '']
         ]
-        Board.class_variable_set(:@@board_array, board_array)
+        described_class.class_variable_set(:@@board_array, board_array)
         expect(board).to_not be_check_for_full_board
       end
     end
