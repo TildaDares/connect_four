@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'colorize'
 class Board
   def initialize
@@ -21,7 +23,7 @@ class Board
       |  #{a[5][0]}  |  #{a[5][1]}  |  #{a[5][2]}  |  #{a[5][3]}  |  #{a[5][4]}  |  #{a[5][5]}  |  #{a[5][6]}  | 
       |----+----+----+----+----+----+----|
          a    b    c    d    e    f    g
-           HEREDOC
+    HEREDOC
   end
 
   def check_for_empty_cells?(position, tag)
@@ -55,13 +57,15 @@ class Board
   def check_for_wins_vertically?
     0.upto(5) do |i|
       0.upto(3) do |j|
-        if (@@board_array[i][j] == @@board_array[i][j+1]) && (@@board_array[i][j] == @@board_array[i][j+2]) && (@@board_array[i][j] == @@board_array[i][j+3]) && (@@board_array[i][j] != '')
-          @@board_array[i][j] = '◈'.green
-          @@board_array[i][j+1] = '◈'.green
-          @@board_array[i][j+2] = '◈'.green
-          @@board_array[i][j+3] = '◈'.green
-          return true
+        unless (@@board_array[i][j] == @@board_array[i][j + 1]) && (@@board_array[i][j] == @@board_array[i][j + 2]) && (@@board_array[i][j] == @@board_array[i][j + 3]) && (@@board_array[i][j] != '')
+          next
         end
+
+        @@board_array[i][j] = '◈'.green
+        @@board_array[i][j + 1] = '◈'.green
+        @@board_array[i][j + 2] = '◈'.green
+        @@board_array[i][j + 3] = '◈'.green
+        return true
       end
     end
     false
@@ -70,13 +74,15 @@ class Board
   def check_for_wins_horizontally?
     0.upto(6) do |j|
       0.upto(2) do |i|
-        if (@@board_array[i][j] == @@board_array[i+1][j]) && (@@board_array[i][j] == @@board_array[i+2][j]) && (@@board_array[i][j] == @@board_array[i+3][j]) && (@@board_array[i][j] != '')
-          @@board_array[i][j] = '◈'.green
-          @@board_array[i+1][j] = '◈'.green
-          @@board_array[i+2][j] = '◈'.green
-          @@board_array[i+3][j] = '◈'.green
-          return true
+        unless (@@board_array[i][j] == @@board_array[i + 1][j]) && (@@board_array[i][j] == @@board_array[i + 2][j]) && (@@board_array[i][j] == @@board_array[i + 3][j]) && (@@board_array[i][j] != '')
+          next
         end
+
+        @@board_array[i][j] = '◈'.green
+        @@board_array[i + 1][j] = '◈'.green
+        @@board_array[i + 2][j] = '◈'.green
+        @@board_array[i + 3][j] = '◈'.green
+        return true
       end
     end
     false
@@ -85,13 +91,15 @@ class Board
   def check_for_wins_in_the_left_diagonals?
     6.downto(3) do |j|
       0.upto(2) do |i|
-        if (@@board_array[i][j] == @@board_array[i+1][j-1]) && (@@board_array[i][j] == @@board_array[i+2][j-2]) && (@@board_array[i][j] == @@board_array[i+3][j-3]) && (@@board_array[i][j] != '')
-          @@board_array[i][j] = '◈'.green
-          @@board_array[i+1][j-1] = '◈'.green
-          @@board_array[i+2][j-2] = '◈'.green
-          @@board_array[i+3][j-3] = '◈'.green
-          return true
+        unless (@@board_array[i][j] == @@board_array[i + 1][j - 1]) && (@@board_array[i][j] == @@board_array[i + 2][j - 2]) && (@@board_array[i][j] == @@board_array[i + 3][j - 3]) && (@@board_array[i][j] != '')
+          next
         end
+
+        @@board_array[i][j] = '◈'.green
+        @@board_array[i + 1][j - 1] = '◈'.green
+        @@board_array[i + 2][j - 2] = '◈'.green
+        @@board_array[i + 3][j - 3] = '◈'.green
+        return true
       end
     end
     false
@@ -100,13 +108,15 @@ class Board
   def check_for_wins_in_the_right_diagonals?
     0.upto(3) do |j|
       0.upto(2) do |i|
-        if (@@board_array[i][j] == @@board_array[i+1][j+1]) && (@@board_array[i][j] == @@board_array[i+2][j+2]) && (@@board_array[i][j] == @@board_array[i+3][j+3]) && (@@board_array[i][j] != '')
-          @@board_array[i][j] = '◈'.green
-          @@board_array[i+1][j+1] = '◈'.green
-          @@board_array[i+2][j+2] = '◈'.green
-          @@board_array[i+3][j+3] = '◈'.green
-          return true
+        unless (@@board_array[i][j] == @@board_array[i + 1][j + 1]) && (@@board_array[i][j] == @@board_array[i + 2][j + 2]) && (@@board_array[i][j] == @@board_array[i + 3][j + 3]) && (@@board_array[i][j] != '')
+          next
         end
+
+        @@board_array[i][j] = '◈'.green
+        @@board_array[i + 1][j + 1] = '◈'.green
+        @@board_array[i + 2][j + 2] = '◈'.green
+        @@board_array[i + 3][j + 3] = '◈'.green
+        return true
       end
     end
     false
